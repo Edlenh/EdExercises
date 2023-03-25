@@ -65,7 +65,9 @@ header a {
   border-radius: 50%;
   color: #333;
 }
-
+.material-symbols-outlined{
+  cursor: pointer;
+}
 /* new workout form */
 label, input {
   display: block;

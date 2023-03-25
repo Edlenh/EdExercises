@@ -1,8 +1,10 @@
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useState } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Details = ({workout})=>{
     const {dispatch} = useWorkoutsContext()
+    const {user} = useAuthContext()
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
       title: workout.title,
@@ -11,8 +13,14 @@ const Details = ({workout})=>{
     });
 
     const deleteClick =async ()=>{
+      if(!user){
+        return
+      }
         const response = await fetch('/api/workouts/' + workout._id,{
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+              'Authorization' : `Bearer ${user.token}`
+            }
         })
         const json = await response.json()
 
